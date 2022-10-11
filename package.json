@@ -1,7 +1,7 @@
 {
   "name": "DunyaMC-Launcher",
   "preductname": "DünyaMC Launcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dunyamc.com Launcher",
   "main": "src/app.js",
   "author": "Arwalee",
