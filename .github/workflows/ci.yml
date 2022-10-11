@@ -27,7 +27,7 @@ jobs:
           python-version: 3.x
 
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
         shell: bash
 
       - name: Build
