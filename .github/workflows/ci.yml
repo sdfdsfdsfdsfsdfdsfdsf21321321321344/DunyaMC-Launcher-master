@@ -36,5 +36,20 @@ jobs:
         run: npm run build
         shell: bash
 
-      - name: GitHub Releases
-        uses: fnkr/github-action-ghr@v1.3
+      - name: releases-action
+        # You may pin to the exact commit or the version.
+        # uses: nickatnight/releases-action@893540eb446b37c82cf414f2bb439e805e70b41f
+        uses: nickatnight/releases-action@v2
+        with:
+          # Name of branch to release from
+          branch: master
+          # Name of the release
+          name: 1.0.4
+          # Message for the release
+          message: Release
+          # Draft or naw?
+          draft: false
+          # Pre-release or naw
+          prerelease: false
+          # Name of tag
+          tag: 1.0.4
