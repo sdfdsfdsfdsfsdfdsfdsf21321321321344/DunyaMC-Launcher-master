@@ -29,6 +29,10 @@ jobs:
       - name: Install Dependencies
         run: npm i
         shell: bash
+        
+      - name: test
+        run: npm rebuild --verbose sharp
+        shell: bash
 
       - name: Build
         env:
