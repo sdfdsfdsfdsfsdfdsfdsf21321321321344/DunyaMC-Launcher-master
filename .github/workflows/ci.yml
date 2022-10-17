@@ -35,10 +35,6 @@ jobs:
           GH_TOKEN: ${{ secrets.github_token }}
         run: npm run build
         shell: bash
-        
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: builld
-          path: ./dist
+      - name: GitHub Releases
+        uses: fnkr/github-action-ghr@v1.3
