@@ -45,7 +45,7 @@ builder.build({
         }
     }
 }).then(() => {
-    console.log('le build est terminé')
+    console.log('build edildi')
 }).catch(err => {
     console.error('Error during build!', err)
 })
