@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1 
+        uses: actions/checkout@v13
 
       - name: Set up Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -29,10 +29,6 @@ jobs:
       - name: Install Dependencies
         run: npm i
         shell: bash
-        
-      - name: test
-        run: npm rebuild --verbose sharp
-        shell: bash
 
       - name: Build
         env:
@@ -40,8 +36,3 @@ jobs:
         run: npm run build
         shell: bash
         
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: builld
-          path: ./dist
