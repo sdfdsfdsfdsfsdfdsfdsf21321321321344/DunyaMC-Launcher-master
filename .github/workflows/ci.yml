@@ -41,7 +41,7 @@ jobs:
         run: npm run build
         shell: bash
 
-      - name: Upload Release Assets (Linux, Darwin, Windows)
+      - name: Release
         # You may pin to the exact commit or the version.
         # uses: wzshiming/action-upload-release-assets@0c2e3232b7d78049e062fcf756847e159b24298a
         uses: wzshiming/action-upload-release-assets@v1
