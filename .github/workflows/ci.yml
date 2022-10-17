@@ -2,13 +2,17 @@
 name: Launcher Build
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
+      - release/*
+
 
 jobs:
   release:
     #runs-on: ${{ matrix.os }}
-    runs-on: ubuntu-latest
-
+    name: Release
+    runs-on: ${{ matrix.os }}
+    
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -37,20 +41,8 @@ jobs:
         run: npm run build
         shell: bash
 
-      - name: releases-action
+      - name: Upload Release Assets (Linux, Darwin, Windows)
         # You may pin to the exact commit or the version.
-        # uses: nickatnight/releases-action@893540eb446b37c82cf414f2bb439e805e70b41f
-        uses: nickatnight/releases-action@v2
-        with:
-          # Name of branch to release from
-          branch: master
-          # Name of the release
-          name: 1.0.4
-          # Message for the release
-          message: Release
-          # Draft or naw?
-          draft: false
-          # Pre-release or naw
-          prerelease: false
-          # Name of tag
-          tag: 1.0.4
+        # uses: wzshiming/action-upload-release-assets@0c2e3232b7d78049e062fcf756847e159b24298a
+        uses: wzshiming/action-upload-release-assets@v1
+
