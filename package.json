@@ -7,7 +7,7 @@
   "author": "Arwalee",
   "url": "https://launcher.selvania.fr/",
   "engines": {
-      "node": "12.x.x"
+      "node": "16.x.x"
   },
   "scripts": {
       "start": "cross-env-shell NODE_ENV=dev electron .",
