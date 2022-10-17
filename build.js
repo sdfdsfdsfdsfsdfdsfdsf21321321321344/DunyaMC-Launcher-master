@@ -16,7 +16,7 @@ builder.build({
             icon: "./src/assets/images/icon.ico",
             target: [{
                 target: "nsis",
-                arch: ["x64"]
+                arch: ["x64","ia32"]
             }],
         },
         nsis: {
