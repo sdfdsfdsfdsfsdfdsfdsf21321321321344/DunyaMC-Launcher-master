@@ -12,6 +12,7 @@ const request = require('request');
 const axios = require('axios');
 const { Client, Authenticator } = require('minecraft-launcher-core');
 const launcher = new Client();
+const path = require('path');
 
 //const pkg = require('../package.json');
 //const { Launch, Status } = require('minecraft-java-core');
@@ -118,8 +119,7 @@ class Home {
 
 
             var clientname = "DunyaMC-1.16.5";
-            //var pat = `${dataDirectory}\\${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`
-            var pat = `${process.env.APPDATA +"\\.DunyaMC" || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share")}`
+            var pat = path.join(dataDirectory, process.platform == 'darwin' ? `.DunyaMC` : `.DunyaMC`);
             
             let opts = {
                 clientPackage: null,
@@ -138,33 +138,39 @@ class Home {
             info.style.display = "block"
 
             var fileUrl = "http://dunyamc.com/texturepack/dunyamctexturepack.zip"; //texture pack url
-            var output = pat+"\\resourcepacks\\dunyamctexturepack.zip"; 
+
+            var output = path.join(pat, "resourcepacks", "dunyamctexturepack.zip");
+
 
             if(!fs.existsSync(pat)){
                 fs.mkdirSync(pat); 
-                if(!fs.existsSync(pat+"\\resourcepacks")){
-                    fs.mkdirSync(pat+"\\resourcepacks");
+                if(!fs.existsSync(path.join(pat, "resourcepacks"))){
+                    fs.mkdirSync(path.join(pat, "resourcepacks"));
                 }
-                if(!fs.existsSync(pat+"\\versions")){
-                    fs.mkdirSync(pat+"\\versions");
+                if(!fs.existsSync(path.join(pat, "versions"))){
+                    fs.mkdirSync(path.join(pat, "versions"));
                 }
             }
             request({url: fileUrl, encoding: null}, function(err, resp, body) {
                 if(err) throw err;
                 fs.writeFile(output, body, function(err) {
-                    if(!fs.existsSync(pat+"\\versions\\DunyaMC-1.16.5")) {
-                        fs.mkdirSync(pat+"\\versions\\DunyaMC-1.16.5")
+                    if(!fs.existsSync(path.join(pat, "versions", clientname))) {
+                        fs.mkdirSync(path.join(pat, "versions", clientname));
                         
-                        document.querySelector(".text-download").innerHTML = `Guncelleme Yapiliyor...`
+                        document.querySelector(".text-download").innerHTML = `Güncelleme Yapılıyor...`
                         request({url: "http://dunyamc.com/launcher/launcherv1/files/files/versions/DunyaMC-1.16.5/DunyaMC-1.16.5.jar", encoding: null}, function(err, resp, body) {
                             if(err) throw err;
-                            fs.writeFile(pat+"\\versions\\DunyaMC-1.16.5\\DunyaMC-1.16.5.jar", body, function(err) {
-                                request({url: "http://dunyamc.com/launcher/launcherv1/files/files/versions/DunyaMC-1.16.5/DunyaMC-1.16.5.json", encoding: null}, function(err, resp, body) {
-                                    if(err) throw err;
-                                    fs.writeFile(pat+"\\versions\\DunyaMC-1.16.5\\DunyaMC-1.16.5.json", body, function(err) {
-                                        launcher.launch(opts);
+                            fs.writeFile(path.join(pat, "versions", clientname, clientname+".jar"), body, function(err) {
+                                setTimeout(() => {
+                                    request({url: "http://dunyamc.com/launcher/launcherv1/files/files/versions/DunyaMC-1.16.5/DunyaMC-1.16.5.json", encoding: null}, function(err, resp, body) {
+                                        if(err) throw err;
+    
+                                        
+                                        fs.writeFile(path.join(pat, "versions", clientname, clientname+".json"), body, function(err) {
+                                            launcher.launch(opts);
+                                        })
                                     })
-                                })
+                                }, 3 * 1000);
             
                             })
                         })
@@ -179,11 +185,12 @@ class Home {
                 });
                 
             });
+            
             launcher.on('debug', (e) => console.log(e));
             
             launcher.on('progress', (e) => {
                 progressBar.style.display = "block"
-                document.querySelector(".text-download").innerHTML = `Yukleniyor ${e.task || 0}/${e.total || 0}`
+                document.querySelector(".text-download").innerHTML = `Yükleniyor ${e.task || 0}/${e.total || 0}`
                 console.log(e)
                 //progressBar.value = DL;
                 //progressBar.max = totDL;

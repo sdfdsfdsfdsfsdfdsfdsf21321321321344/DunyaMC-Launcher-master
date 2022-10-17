@@ -6,8 +6,11 @@
 'use strict';
 
 import { database, changePanel, addAccount, accountSelect } from '../utils.js';
-const { Mojang } = require('minecraft-java-core');
+//const { Mojang } = require('minecraft-java-core');
 const { ipcRenderer } = require('electron');
+const { v3: uuidv3 } = require('uuid')
+const nodeFetch = require("node-fetch")
+let api_url = 'https://authserver.mojang.com'
 
 class Login {
     static id = "login";
@@ -17,6 +20,7 @@ class Login {
         if (this.config.online) this.getOnline()
         else this.getOffline()
     }
+
 
     getOnline() {
         console.log(`Initializing microsoft Panel...`)
@@ -143,43 +147,26 @@ class Login {
                 return
             }
 
-            Mojang.getAuth(mailInput.value, passwordInput.value).then(account_connect => {
-                let account = {
-                    access_token: account_connect.access_token,
-                    client_token: account_connect.client_token,
-                    uuid: account_connect.uuid,
-                    name: account_connect.name,
-                    user_properties: account_connect.user_properties,
-                    meta: {
-                        type: account_connect.meta.type,
-                        offline: account_connect.meta.offline
-                    }
-                }
+        
+            this.database.add(account, 'accounts')
+            this.database.update({ uuid: "1234", selected: account.uuid }, 'accounts-selected');
 
-                this.database.add(account, 'accounts')
-                this.database.update({ uuid: "1234", selected: account.uuid }, 'accounts-selected');
+            addAccount(account)
+            accountSelect(account.uuid)
+            changePanel("home");
 
-                addAccount(account)
-                accountSelect(account.uuid)
-                changePanel("home");
-
-                cancelMojangBtn.disabled = false;
-                cancelMojangBtn.click();
-                mailInput.value = "";
-                loginBtn.disabled = false;
-                mailInput.disabled = false;
-                passwordInput.disabled = false;
-                loginBtn.style.display = "block";
-                infoLogin.innerHTML = "&nbsp;";
-            }).catch(err => {
-                cancelMojangBtn.disabled = false;
-                loginBtn.disabled = false;
-                mailInput.disabled = false;
-                passwordInput.disabled = false;
-                infoLogin.innerHTML = 'Adresse E-mail ou mot de passe invalide'
-            })
+            cancelMojangBtn.disabled = false;
+            cancelMojangBtn.click();
+            mailInput.value = "";
+            loginBtn.disabled = false;
+            mailInput.disabled = false;
+            passwordInput.disabled = false;
+            loginBtn.style.display = "block";
+            infoLogin.innerHTML = "&nbsp;";
         })
     }
+
+
 
     loginOffline() {
         let mailInput = document.querySelector('.Mail')
@@ -226,8 +213,7 @@ class Login {
                 passwordInput.disabled = false;
                 return
             }
-
-            Mojang.getAuth(mailInput.value, passwordInput.value).then(async account_connect => {
+            this.getAuth(mailInput.value, passwordInput.value).then(account_connect => {
                 let account = {
                     access_token: account_connect.access_token,
                     client_token: account_connect.client_token,
@@ -256,15 +242,66 @@ class Login {
                 loginBtn.style.display = "block";
                 infoLogin.innerHTML = "&nbsp;";
             }).catch(err => {
-                console.log(err)
                 cancelMojangBtn.disabled = false;
                 loginBtn.disabled = false;
                 mailInput.disabled = false;
                 passwordInput.disabled = false;
                 infoLogin.innerHTML = 'Adresse E-mail ou mot de passe invalide'
             })
+
         })
     }
+    async getAuth(username, password) {
+        let UUID = uuidv3(username, uuidv3.DNS)
+        if (!password) {
+            let user = {
+                access_token: 'null',
+                client_token: 'null',
+                uuid: UUID,
+                name: username,
+                user_properties: '{}',
+                meta: {
+                    offline: true,
+                    type: 'Mojang'
+                }
+            }
+            return user
+        }
+
+        let post = {
+            agent: {
+                name: "Minecraft",
+                version: 1
+            },
+            username,
+            password,
+            clientToken: UUID,
+            requestUser: true
+        }
+
+        let message = await nodeFetch(`${api_url}/authenticate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(post)
+        }).then(res => res.json());
+
+        if (message.error) throw (`error: ${message.errorMessage}`);
+        let user = {
+            access_token: message.accessToken,
+            client_token: message.clientToken,
+            uuid: message.selectedProfile.id,
+            name: message.selectedProfile.name,
+            user_properties: '{}',
+            meta: {
+                offline: false,
+                type: 'Mojang'
+            }
+        }
+        return user
+    }
+
 }
 
 export default Login;

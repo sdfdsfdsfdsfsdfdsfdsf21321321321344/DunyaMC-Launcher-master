@@ -4,7 +4,7 @@
  */
 
 const { app, ipcMain } = require('electron');
-const { Microsoft } = require('minecraft-java-core');
+//const { Microsoft } = require('minecraft-java-core');
 const { autoUpdater } = require('electron-updater')
 
 const path = require('path');
@@ -52,9 +52,8 @@ ipcMain.on('main-window-maximize', () => {
 ipcMain.on('main-window-hide', () => MainWindow.getWindow().hide())
 ipcMain.on('main-window-show', () => MainWindow.getWindow().show())
 
-ipcMain.handle('Microsoft-window', async(event, client_id) => {
-    return await new Microsoft(client_id).getAuth();
-})
+
+
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();

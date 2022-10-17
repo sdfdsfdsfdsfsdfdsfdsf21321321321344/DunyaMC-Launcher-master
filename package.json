@@ -22,11 +22,12 @@
     "axios": "^1.1.2",
     "electron-updater": "^5.0.1",
     "fs": "^0.0.1-security",
-    "minecraft-java-core": "^2.1.1",
     "minecraft-launcher-core": "^3.16.16",
     "node-fetch": "^2.6.7",
+    "path": "^0.12.7",
     "request": "^2.88.2",
-    "sharp": "^0.31.1"
+    "sharp": "^0.31.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -36,6 +37,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sdfdsfdsfdsfsdfdsfdsf21321321321344/DunyaMC-Launcher-master.git"
+    "url": "git+https://github.com/bynoment/DunyaMC-Launcher-master"
   }
 }
