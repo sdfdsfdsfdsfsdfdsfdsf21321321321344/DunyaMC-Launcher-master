@@ -19,7 +19,7 @@
 
 **Klonlama ve bağımlılıkları yükleme**
 
-'''console
+```console
 > git clone https://github.com/bynoment/DunyaMC-Launcher-master
 > cd DunyaMC-Launcher-master
 > npm install
