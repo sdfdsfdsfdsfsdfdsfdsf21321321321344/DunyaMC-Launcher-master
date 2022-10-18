@@ -36,16 +36,3 @@
 | Linux    | `npm run build:linux` |
 
 ---
-
-
----
-**<p align="center">Launcheri düzenleyin.</p>**
-
-- [Dokümanlar](./wiki.md).
-
----
-
-[releases]: https://github.com/bynoment/DunyaMC-Launcher-master/releases 'releases'
-[build]: https://github.com/bynoment/DunyaMC-Launcher-master/releases 'build'
-
-
