@@ -12,29 +12,28 @@
 
 ---
 
-**conditions d'utilisation**
-- Pour utiliser le code, vous devez faire un fork du projet.
-- Pour utiliser le code, votre code doit tout le temps être public.
-
+**Kullanım Şartları**
+- Kodu kullanmak için projeyi forklamalısınız.
+- Kodu kullanmak için kodunuz her zaman herkese açık olmalıdır.
 ---
 
-**Cloner et installer les dépendances**
+**Klonlama ve bağımlılıkları yükleme**
 
-```console
-> git clone https://github.com/luuxis/Selvania-Launcher.git
-> cd Selvania-Launcher
+'''console
+> git clone https://github.com/bynoment/DunyaMC-Launcher-master
+> cd DunyaMC-Launcher-master
 > npm install
 ```
 ---
 
-**Lancer l'application**
+**Uygulamayı başlat**
 
 ```console
 > npm start
 ```
 ---
 
-**Création du build**
+**Build**
 
 | Platform    | Command              |
 | ----------- | -------------------- |
@@ -44,35 +43,18 @@
 
 ---
 
-**<p align="center">Fonctionnalité du launcher.</p>**
-
-- Mise à jour automatique.
-
-- Maintenance launcher.
-
-- Maintenance message custom.
-
-- Statut serveur complet.
-
-- Authentification mojang.
-
-- Authentification Microsoft.
-
-- Authentification crack.
-
-- Accepte toutes versions de Minecraft 1.0 > 1.19.x (Forge, Fabric etc).
 
 ---
-**<p align="center">Configurer votre launcher.</p>**
+**<p align="center">Launcheri düzenleyin.</p>**
 
-- [Doc ici](./wiki.md).
+- [Dokümanlar](./wiki.md).
 
 ---
 
 [<p align="center"><img src="https://discordapp.com/api/guilds/819729377650278420/embed.png?style=banner4" alt="discord">](https://discord.gg/e9q7Yr2cuQ) 
 ---
 
-[releases]: https://github.com/luuxis/Selvania-Launcher/releases 'releases'
-[build]: https://github.com/luuxis/Selvania-Launcher/releases 'build'
+[releases]: https://github.com/bynoment/DunyaMC-Launcher-master/releases 'releases'
+[build]: https://github.com/bynoment/DunyaMC-Launcher-master/releases 'build'
 
 
