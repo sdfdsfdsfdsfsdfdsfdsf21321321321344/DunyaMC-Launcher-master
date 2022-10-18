@@ -45,7 +45,7 @@ builder.build({
         }
     }
 }).then(() => {
-    console.log('build edildi')
+    console.log('Build başarılı.')
 }).catch(err => {
-    console.error('Error during build!', err)
+    console.error('Hata: ', err)
 })
